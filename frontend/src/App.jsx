@@ -531,7 +531,7 @@ const handleRenewSubscription = async (e) => {
       className="hidden lg:block p-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-slate-300 hover:text-white"
     >
      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M4 6h16M4 12h16M4 18h16" : "M4 6h16M4 12h16M4 18h16"} />
 </svg>
     </button>
   </div>
