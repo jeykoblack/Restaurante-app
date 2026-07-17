@@ -5437,29 +5437,43 @@ const renderContent = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Iniciar sesión</p>
               <h2 className="mt-2 text-3xl font-bold">Accede al panel</h2>
             </div>
+<form className="space-y-4" onSubmit={handleLogin}>
+  {/* Bloque del Correo electrónico */}
+  <div>
+    <span className="text-sm font-medium text-slate-300 block mb-1">
+      Correo electrónico
+    </span>
+    <input
+      type="email"
+      placeholder="ejemplo@restaurante.com"
+      value={loginForm.email}
+      onChange={(e) => setLoginForm((prev) => ({ ...prev, email: e.target.value }))}
+      className={inputClass}
+    />
+  </div>
 
-            <form className="space-y-4" onSubmit={handleLogin}>
-              <input
-                type="email"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm((prev) => ({ ...prev, email: e.target.value }))}
-                className={inputClass}
-              />
-              <div className="relative">
-                <input
-                  type={showLoginPassword ? 'text' : 'password'}
-                  value={loginForm.password}
-                  onChange={(e) => setLoginForm((prev) => ({ ...prev, password: e.target.value }))}
-                  className={`${inputClass} pr-20`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowLoginPassword((prev) => !prev)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-500 hover:text-slate-700"
-                >
-                  {showLoginPassword ? 'Ocultar' : 'Ver'}
-                </button>
-              </div>
+  {/* Bloque de la Contraseña */}
+  <div>
+    <span className="text-sm font-medium text-slate-300 block mb-1">
+      Contraseña
+    </span>
+    <div className="relative">
+      <input
+        type={showLoginPassword ? 'text' : 'password'}
+        placeholder="••••••••••••"
+        value={loginForm.password}
+        onChange={(e) => setLoginForm((prev) => ({ ...prev, password: e.target.value }))}
+        className={`${inputClass} pr-20`}
+      />
+      <button
+        type="button"
+        onClick={() => setShowLoginPassword((prev) => !prev)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-500 hover:text-slate-700"
+      >
+        {showLoginPassword ? 'Ocultar' : 'Ver'}
+      </button>
+    </div>
+  </div>
 
               {loginError ? (
                 <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
