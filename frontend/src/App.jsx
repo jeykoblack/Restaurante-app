@@ -5660,12 +5660,28 @@ const renderContent = () => {
           </div>
         </aside>
 
-        <main className="flex-1">
+       
+          <main className="flex-1">
           <header className="border-b border-white/60 bg-white/70 px-5 py-4 backdrop-blur lg:px-8">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">Software de Restaurante</h2>
-                <p className="text-sm text-slate-500">{sectionTitle[activeView]}</p>
+              
+              {/* CONTENEDOR DEL TÍTULO Y EL BOTÓN EN MÓVIL */}
+              <div className="flex items-center gap-3">
+                {/* BOTÓN DE LAS 3 RAYITAS (SOLO VISIBLE EN MÓVIL) */}
+                <button 
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition lg:hidden shrink-0"
+                  title="Abrir menú"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                  </svg>
+                </button>
+
+                <div>
+                  <h2 className="text-2xl font-bold">Software de Restaurante</h2>
+                  <p className="text-sm text-slate-500">{sectionTitle[activeView]}</p>
+                </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
