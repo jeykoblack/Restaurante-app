@@ -1082,8 +1082,8 @@ const isKitchenUser = currentRoleName === 'COCINA';
 const isAdminUser = currentRoleName === 'ADMIN';
 
   const [loginForm, setLoginForm] = useState({
-    email: 'admin@restaurante.com',
-    password: 'Admin123456',
+    email: '',
+    password: '',
   });
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
