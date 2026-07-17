@@ -5646,46 +5646,47 @@ const renderContent = () => {
 
        
           <main className="flex-1">
-          <header className="relative border-b border-white/60 bg-white/70 px-5 py-4 backdrop-blur lg:px-8">
-  {/* CONTENEDOR PRINCIPAL */}
-  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between pl-12 lg:pl-0">
-    
-    {/* BOTÓN DE LAS 3 RAYITAS EN LA ESQUINA SUPERIOR IZQUIERDA */}
-    <button 
-      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-      className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-white hover:bg-slate-900 transition lg:hidden"
-      type="button"
-      title="Abrir menú"
-    >
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-      </svg>
-    </button>
+<header className="border-b border-white/60 bg-white/70 px-4 py-4 backdrop-blur lg:px-8">
+  {/* FILA SUPERIOR: BOTÓN Y TÍTULO PERFECTAMENTE ALINEADOS */}
+  <div className="flex items-center justify-between lg:justify-start lg:gap-6">
+    <div className="flex items-center gap-3">
+      {/* BOTÓN DE LAS 3 RAYITAS (MÓVIL) */}
+      <button 
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-white hover:bg-slate-900 transition lg:hidden"
+        type="button"
+        title="Abrir menú"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+        </svg>
+      </button>
 
-    {/* TÍTULO */}
-    <div>
-      <h2 className="text-2xl font-bold text-slate-900">Software de Restaurante</h2>
-      <p className="text-sm text-slate-500">{sectionTitle[activeView]}</p>
+      <div>
+        <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">Software de Restaurante</h2>
+        <p className="text-xs text-slate-500 sm:text-sm">{sectionTitle[activeView]}</p>
+      </div>
     </div>
+  </div>
 
-    {/* CONTROLES DE BÚSQUEDA Y ACCIONES */}
-    <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
-      <input
-        className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none"
-        placeholder="Buscar pedido, cliente o mesa"
-      />
+  {/* FILA INFERIOR: CONTROLES SECUNDARIOS (Se apilan en móvil y van en línea en PC) */}
+  <div className="mt-4 flex flex-col gap-3 lg:mt-5 lg:flex-row lg:items-center lg:justify-end">
+    <input
+      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none lg:w-80"
+      placeholder="Buscar pedido, cliente o mesa"
+    />
+    <div className="flex gap-2">
       <button
         onClick={handleCreateOrder}
         disabled={isSaving}
-        className="rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-medium text-white shadow-sm disabled:opacity-60"
+        className="flex-1 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-90 disabled:opacity-60 lg:flex-none"
       >
         Nuevo pedido
       </button>
-      <button className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium">
+      <button className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-slate-50 lg:flex-none">
         Imprimir comanda
       </button>
     </div>
-
   </div>
 </header>
           <div className="space-y-6 p-5 lg:p-8">
