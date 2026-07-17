@@ -1153,12 +1153,28 @@ const isAdminUser = currentRoleName === 'ADMIN';
   const [isSaving, setIsSaving] = useState(false);
   const [connectionError, setConnectionError] = useState('');
   const [actionMessage, setActionMessage] = useState('');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const [branches, setBranches] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth >= 1024) {
+      setMobileMenuOpen(false);
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  handleResize();
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
+const [branches, setBranches] = useState([]);
+const [categories, setCategories] = useState([]);
+const [products, setProducts] = useState([]);
   const [tables, setTables] = useState([]);
   const [orders, setOrders] = useState([]);
   const [protectedUsers, setProtectedUsers] = useState([]);
