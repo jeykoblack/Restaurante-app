@@ -4130,12 +4130,12 @@ const renderCashier = () => (
               </div>
 
               <button
-                onClick={handlePayCurrentOrder}
-               disabled={isSaving || !selectedDeliveryOrder}
-                className="mt-4 w-full rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
-              >
-                Cobrar pedido actual
-              </button>
+  onClick={handlePayCurrentOrder}
+  disabled={isSaving || !currentOrderEntity}
+  className="mt-4 w-full rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+>
+  Cobrar pedido actual
+</button>
 
               <button
                 onClick={handleDeleteCurrentOrder}
