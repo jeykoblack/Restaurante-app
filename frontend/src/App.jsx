@@ -495,14 +495,19 @@ const handleRenewSubscription = async (e) => {
       <div className="flex min-h-screen">
         {/* BOTÓN FLOTANTE EN MÓVIL PARA ABRIR MENÚ */}
 <button 
-  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-  className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-slate-950 text-white shadow-2xl lg:hidden"
-  title="Menú"
->
- <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-</svg>
-</button>
+      onClick={() => {
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+        } else {
+          setIsSidebarCollapsed(!isSidebarCollapsed);
+        }
+      }}
+      className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-slate-300 hover:text-white"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isSidebarCollapsed && !mobileMenuOpen ? "M4 6h16M4 12h16M4 18h16" : "M6 18L18 6M6 6l12 12"} />
+      </svg>
+    </button>
 
 {/* ASIDE RESPONSIVO */}
 <aside 
@@ -5645,9 +5650,57 @@ const renderContent = () => {
 </aside>
 
        
-          <main className="flex-1">
+<main className="flex-1">
+          
+          {/* ----- INICIO DEL HEADER QUE FALTABA ----- */}
+          <header className="border-b border-white/60 bg-white/70 px-4 py-4 backdrop-blur lg:px-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              
+              {/* IZQUIERDA: BOTÓN MÓVIL Y TÍTULO */}
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-950 text-white hover:bg-slate-900 transition lg:hidden"
+                  type="button"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">Software de Restaurante</h2>
+                  <p className="text-xs text-slate-500 sm:text-sm">{sectionTitle[activeView]}</p>
+                </div>
+              </div>
+
+              {/* DERECHA: BÚSQUEDA Y BOTONES (En 1 sola línea en PC) */}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <input
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none sm:w-64 lg:w-80"
+                  placeholder="Buscar pedido, cliente o mesa"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCreateOrder}
+                    disabled={isSaving}
+                    className="flex-1 rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-90 disabled:opacity-60 sm:flex-none"
+                  >
+                    Nuevo pedido
+                  </button>
+                  <button className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-slate-50 sm:flex-none">
+                    Imprimir comanda
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </header>
+          {/* ----- FIN DEL HEADER ----- */}
 
           <div className="space-y-6 p-5 lg:p-8">
+            
+            
             {connectionError ? (
               <div className="rounded-3xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
                 {connectionError}
