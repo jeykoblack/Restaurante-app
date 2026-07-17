@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://46.183.112.122/api';
 
 function StatCard({ label, value, note }) {
   return (
