@@ -493,42 +493,98 @@ const handleRenewSubscription = async (e) => {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="hidden w-72 shrink-0 border-r border-slate-900/80 bg-slate-950 text-white lg:flex lg:flex-col">
-          <div className="border-b border-white/10 p-6">
-            <div className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              SmartMesa
-            </div>
-            <h1 className="mt-4 text-3xl font-bold">SaaS Control</h1>
-            <p className="mt-2 text-sm text-slate-300">
-              Supervisa clientes, accesos y suscripciones sin salir del panel.
-            </p>
-          </div>
+        {/* BOTÓN FLOTANTE EN MÓVIL PARA ABRIR MENÚ */}
+<button 
+  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+  className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-slate-950 text-white shadow-2xl lg:hidden"
+  title="Menú"
+>
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+  </svg>
+</button>
 
-          <div className="space-y-2 p-6 text-sm">
-            <div className="rounded-md border border-white/10 bg-white/5 px-4 py-3 font-semibold text-white">
-              Dashboard 
-            </div>
-            <div className="rounded-md px-4 py-3 text-slate-400">Restaurantes</div>
-            <div className="rounded-md px-4 py-3 text-slate-400">Suscripciones</div>
-            <div className="rounded-md px-4 py-3 text-slate-400">Renovaciones</div>
-            <div className="rounded-md px-4 py-3 text-slate-400">Configuración</div>
-          </div>
+{/* ASIDE RESPONSIVO */}
+<aside 
+  className={`fixed inset-y-0 left-0 z-40 border-r border-white/50 bg-slate-950 text-white transition-all duration-300 ease-in-out lg:sticky lg:flex lg:flex-col ${
+    mobileMenuOpen ? 'w-72 translate-x-0' : '-translate-x-full lg:translate-x-0'
+  } ${isSidebarCollapsed ? 'lg:w-20' : 'lg:w-72'}`}
+>
+  {/* Cabecera del Sidebar */}
+  <div className={`border-b border-slate-800 p-6 flex items-center ${isSidebarCollapsed ? 'lg:justify-center' : 'justify-between'}`}>
+    {(!isSidebarCollapsed || mobileMenuOpen) && (
+      <div className="overflow-hidden">
+        <div className="inline-flex rounded-2xl bg-white/10 px-3 py-1 text-xs font-semibold tracking-[0.24em] text-slate-300 uppercase">
+          SmartMesa
+        </div>
+        <h1 className="mt-4 text-3xl font-bold">SmartMesa</h1>
+      </div>
+    )}
+    
+    <button 
+      onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+      className="hidden lg:block p-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-slate-300 hover:text-white"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
 
-          <div className="mt-auto space-y-4 border-t border-white/10 p-6">
-            <div className="rounded-md border border-emerald-500/20 bg-emerald-500/10 p-4">
-              <p className="text-xs uppercase tracking-[0.18em] text-emerald-300">Estado</p>
-              <p className="mt-2 text-2xl font-bold">{stats.active}</p>
-              <p className="text-sm text-slate-300">restaurantes activos</p>
-            </div>
-            <button
-              onClick={onLogout}
-              className="w-full rounded-md border border-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/5"
-            >
-              Cerrar sesión
-            </button>
+  {/* Navegación */}
+  <nav className="flex-1 p-4 overflow-y-auto overflow-x-hidden">
+    <div className="space-y-2">
+      {nav.map((item) => (
+        <button
+          key={item.key}
+          onClick={() => {
+            setActiveView(item.key);
+            setMobileMenuOpen(false); // Cierra el menú en móvil al dar clic
+          }}
+          className={`w-full flex items-center rounded-2xl py-3 text-sm font-medium transition-all ${
+            activeView === item.key 
+              ? 'bg-white text-slate-950 shadow-sm' 
+              : 'text-slate-300 hover:bg-slate-900'
+          } ${isSidebarCollapsed ? 'lg:justify-center lg:px-0' : 'px-4 justify-start'}`}
+        >
+          <div className={`flex items-center justify-center shrink-0 ${isSidebarCollapsed ? 'lg:mr-0' : 'mr-3'} w-7 h-7 rounded-md ${
+            activeView === item.key ? 'bg-slate-200 text-slate-900' : 'bg-white/10 text-white'
+          }`}>
+            {item.icon}
           </div>
-        </aside>
+          
+          {(!isSidebarCollapsed || mobileMenuOpen) && (
+            <span className="truncate">{item.label}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  </nav>
+
+  {/* Pie del Sidebar */}
+  <div className="border-t border-slate-800 p-4">
+    {isSidebarCollapsed && !mobileMenuOpen ? (
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center font-bold text-lg border border-white/10">
+          {authUser.firstName.charAt(0)}
+        </div>
+      </div>
+    ) : (
+      <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-4 shadow-lg overflow-hidden">
+        <p className="text-sm font-semibold truncate">Sesión activa</p>
+        <p className="mt-1 text-xs text-slate-400 truncate">
+          {authUser.firstName} · {authUser.role?.name}
+        </p>
+        <button
+          onClick={handleLogout}
+          className="mt-4 w-full rounded-2xl border border-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/5 flex items-center justify-center gap-2"
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    )}
+  </div>
+</aside>
 
         <main className="min-w-0 flex-1">
           <div className="border-b border-slate-200 bg-white">
@@ -2966,7 +3022,7 @@ const renderDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <section className="grid grid-cols-4 gap-4">
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className={panelCard}>
           <p className="text-sm text-slate-500">Ventas del día</p>
           <p className="mt-2 text-2xl font-bold">
