@@ -5555,154 +5555,139 @@ const renderContent = () => {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#f8fafc,_#e2e8f0)] text-slate-900">
       <div className="flex min-h-screen">
+{/* CAPA OSCURA DE FONDO EN MÓVIL (Se muestra cuando el menú está abierto) */}
+{mobileMenuOpen && (
+  <div 
+    className="fixed inset-0 z-40 bg-slate-950/50 backdrop-blur-sm lg:hidden"
+    onClick={() => setMobileMenuOpen(false)}
+  />
+)}
+
+{/* ASIDE RESPONSIVO CORREGIDO */}
 <aside 
-          className={`hidden shrink-0 border-r border-white/50 bg-slate-950 text-white lg:flex lg:flex-col transition-all duration-300 ease-in-out ${
-            isSidebarCollapsed ? 'w-20' : 'w-72'
-          }`}
+  className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/50 bg-slate-950 text-white transition-transform duration-300 ease-in-out lg:sticky lg:translate-x-0 ${
+    mobileMenuOpen ? 'w-72 translate-x-0' : 'w-72 -translate-x-full'
+  } ${isSidebarCollapsed ? 'lg:w-20' : 'lg:w-72'}`}
+>
+  {/* Cabecera del Sidebar */}
+  <div className={`border-b border-slate-800 p-6 flex items-center justify-between ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}>
+    <div className="overflow-hidden">
+      <div className="inline-flex rounded-2xl bg-white/10 px-3 py-1 text-xs font-semibold tracking-[0.24em] text-slate-300 uppercase">
+        SmartMesa
+      </div>
+      {(!isSidebarCollapsed || mobileMenuOpen) && (
+        <h1 className="mt-4 text-3xl font-bold">SmartMesa</h1>
+      )}
+    </div>
+    
+    {/* Botón para colapsar en PC / Cerrar en Móvil */}
+    <button 
+      onClick={() => {
+        if (mobileMenuOpen) {
+          setMobileMenuOpen(false);
+        } else {
+          setIsSidebarCollapsed(!isSidebarCollapsed);
+        }
+      }}
+      className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-slate-300 hover:text-white"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  {/* Navegación */}
+  <nav className="flex-1 p-4 overflow-y-auto overflow-x-hidden">
+    <div className="space-y-2">
+      {nav.map((item) => (
+        <button
+          key={item.key}
+          onClick={() => {
+            setActiveView(item.key);
+            setMobileMenuOpen(false); // Cierra automáticamente el menú al seleccionar una opción
+          }}
+          className={`w-full flex items-center rounded-2xl py-3 text-sm font-medium transition-all ${
+            activeView === item.key 
+              ? 'bg-white text-slate-950 shadow-sm' 
+              : 'text-slate-300 hover:bg-slate-900'
+          } ${isSidebarCollapsed ? 'lg:justify-center lg:px-0' : 'px-4 justify-start'}`}
         >
-          {/* Cabecera del Sidebar */}
-          <div className={`border-b border-slate-800 p-6 flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-between'}`}>
-            {!isSidebarCollapsed && (
-              <div className="overflow-hidden">
-                <div className="inline-flex rounded-2xl bg-white/10 px-3 py-1 text-xs font-semibold tracking-[0.24em] text-slate-300 uppercase">
-                  SmartMesa
-                </div>
-                <h1 className="mt-4 text-3xl font-bold">SmartMesa</h1>
-              </div>
-            )}
-            
-            {/* Botón de las 3 rayitas (Hamburguesa) */}
-            <button 
-              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition text-slate-300 hover:text-white"
-              title={isSidebarCollapsed ? "Expandir menú" : "Contraer menú"}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
+          <div className={`flex items-center justify-center shrink-0 ${isSidebarCollapsed ? 'lg:mr-0' : 'mr-3'} w-7 h-7 rounded-md ${
+            activeView === item.key ? 'bg-slate-200 text-slate-900' : 'bg-white/10 text-white'
+          }`}>
+            {item.icon}
           </div>
+          
+          {(!isSidebarCollapsed || mobileMenuOpen) && (
+            <span className="truncate">{item.label}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  </nav>
 
-          {/* Navegación */}
-          <nav className="flex-1 p-4 overflow-y-auto overflow-x-hidden">
-            <div className="space-y-2">
-              {nav.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => setActiveView(item.key)}
-                  title={isSidebarCollapsed ? item.label : ""}
-                  className={`w-full flex items-center rounded-2xl py-3 text-sm font-medium transition-all ${
-                    activeView === item.key 
-                      ? 'bg-white text-slate-950 shadow-sm' 
-                      : 'text-slate-300 hover:bg-slate-900'
-                  } ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4 justify-start'}`}
-                >
-                  {/* Ícono Sólido del menú */}
-<div className={`flex items-center justify-center shrink-0 ${isSidebarCollapsed ? '' : 'mr-3'} w-7 h-7 rounded-md ${
-  activeView === item.key ? 'bg-slate-200 text-slate-900' : 'bg-white/10 text-white'
-}`}>
-  {item.icon}
-</div>
-                  
-                  {/* Texto (solo si está expandido) */}
-                  {!isSidebarCollapsed && (
-                    <span className="truncate">{item.label}</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </nav>
-
-          {/* Pie del Sidebar (Usuario y Sesión) */}
-          <div className="border-t border-slate-800 p-4">
-            {isSidebarCollapsed ? (
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center font-bold text-lg shadow-lg border border-white/10">
-                  {authUser.firstName.charAt(0)}
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-400/10 rounded-lg transition"
-                  title="Cerrar sesión"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                  </svg>
-                </button>
-              </div>
-            ) : (
-              <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-4 shadow-lg overflow-hidden">
-                <p className="text-sm font-semibold truncate">Sesión activa</p>
-                <p className="mt-1 text-xs text-slate-400 truncate">
-                  {authUser.firstName} {authUser.lastName} · {authUser.role?.name}
-                </p>
-
-                <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                  <div className="rounded-2xl bg-white/5 p-3 overflow-hidden">
-                    <p className="text-slate-400 truncate">Sucursal</p>
-                    <p className="mt-1 font-semibold truncate">{authUser.branch?.code || 'PRINCIPAL'}</p>
-                  </div>
-                  <div className="rounded-2xl bg-white/5 p-3 overflow-hidden">
-                    <p className="text-slate-400 truncate">Usuarios</p>
-                    <p className="mt-1 font-semibold truncate">{protectedUsers.length}</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleLogout}
-                  className="mt-4 w-full rounded-2xl border border-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/5 flex items-center justify-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                  Cerrar sesión
-                </button>
-              </div>
-            )}
-          </div>
-        </aside>
+  {/* Pie del Sidebar */}
+  <div className="border-t border-slate-800 p-4">
+    <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 p-4 shadow-lg overflow-hidden">
+      <p className="text-sm font-semibold truncate">Sesión activa</p>
+      <p className="mt-1 text-xs text-slate-400 truncate">
+        {authUser.firstName} · {authUser.role?.name}
+      </p>
+      <button
+        onClick={handleLogout}
+        className="mt-4 w-full rounded-2xl border border-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/5 flex items-center justify-center gap-2"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</aside>
 
        
           <main className="flex-1">
-          <header className="border-b border-white/60 bg-white/70 px-5 py-4 backdrop-blur lg:px-8">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              
-              {/* CONTENEDOR DEL TÍTULO Y EL BOTÓN EN MÓVIL */}
-              <div className="flex items-center gap-3">
-                {/* BOTÓN DE LAS 3 RAYITAS (SOLO VISIBLE EN MÓVIL) */}
-                <button 
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="p-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition lg:hidden shrink-0"
-                  title="Abrir menú"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-                  </svg>
-                </button>
+          <header className="relative border-b border-white/60 bg-white/70 px-5 py-4 backdrop-blur lg:px-8">
+  {/* CONTENEDOR PRINCIPAL */}
+  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between pl-12 lg:pl-0">
+    
+    {/* BOTÓN DE LAS 3 RAYITAS EN LA ESQUINA SUPERIOR IZQUIERDA */}
+    <button 
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-white hover:bg-slate-900 transition lg:hidden"
+      type="button"
+      title="Abrir menú"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+      </svg>
+    </button>
 
-                <div>
-                  <h2 className="text-2xl font-bold">Software de Restaurante</h2>
-                  <p className="text-sm text-slate-500">{sectionTitle[activeView]}</p>
-                </div>
-              </div>
+    {/* TÍTULO */}
+    <div>
+      <h2 className="text-2xl font-bold text-slate-900">Software de Restaurante</h2>
+      <p className="text-sm text-slate-500">{sectionTitle[activeView]}</p>
+    </div>
 
-              <div className="flex flex-wrap items-center gap-3">
-                <input
-                  className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none"
-                  placeholder="Buscar pedido, cliente o mesa"
-                />
-                <button
-                  onClick={handleCreateOrder}
-                  disabled={isSaving}
-                  className="rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-medium text-white shadow-sm disabled:opacity-60"
-                >
-                  Nuevo pedido
-                </button>
-                <button className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium">
-                  Imprimir comanda
-                </button>
-              </div>
-            </div>
-          </header>
+    {/* CONTROLES DE BÚSQUEDA Y ACCIONES */}
+    <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
+      <input
+        className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none"
+        placeholder="Buscar pedido, cliente o mesa"
+      />
+      <button
+        onClick={handleCreateOrder}
+        disabled={isSaving}
+        className="rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-medium text-white shadow-sm disabled:opacity-60"
+      >
+        Nuevo pedido
+      </button>
+      <button className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium">
+        Imprimir comanda
+      </button>
+    </div>
 
+  </div>
+</header>
           <div className="space-y-6 p-5 lg:p-8">
             {connectionError ? (
               <div className="rounded-3xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
