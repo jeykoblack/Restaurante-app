@@ -1865,7 +1865,7 @@ const nav = isKitchenUser
 
   const loadBusinessSetting = async (branchId) => {
   try {
-    const response = await fetch(`http://localhost:3001/settings/business/${branchId}`, {
+    const response = await fetch(`http://46.183.112.122:3001/settings/business/${branchId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -2824,7 +2824,7 @@ const handleCreateProduct = async (event) => {
     const formData = new FormData();
     formData.append('logo', logoFile);
 
-    const response = await fetch('http://localhost:3001/settings/business/upload-logo', {
+    const response = await fetch('http://46.183.112.122:3001/settings/business/upload-logo', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -2854,7 +2854,7 @@ const handleCreateProduct = async (event) => {
   try {
     setIsSaving(true);
 
-    const response = await fetch('http://localhost:3001/settings/business', {
+   const response = await fetch('http://46.183.112.122:3001/settings/business', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
