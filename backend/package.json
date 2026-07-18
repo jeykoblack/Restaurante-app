@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "prisma": "^6.16.2"
+    "prisma": "^6.16.2",
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",
