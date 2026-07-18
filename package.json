@@ -1,0 +1,16 @@
+{
+  "name": "restaurante-app",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:backend": "pnpm --filter backend start",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.1.1"
+}

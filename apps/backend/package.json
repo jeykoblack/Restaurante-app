@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "prisma": "^6.16.2",
