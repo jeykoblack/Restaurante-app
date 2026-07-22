@@ -4488,7 +4488,7 @@ const renderContent = () => {
 <aside 
   className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-white/50 bg-slate-950 text-white transition-transform duration-300 ease-in-out lg:sticky lg:translate-x-0 ${
     mobileMenuOpen ? 'w-72 translate-x-0' : 'w-72 -translate-x-full'
-  } ${isSidebarCollapsed ? 'lg:w-20' : 'lg:w-72'}`}
+  } ${isSidebarCollapsed? 'lg:w-20' : 'lg:w-72'}`}
 >
   {/* Cabecera del Sidebar */}
   <div className={`border-b border-slate-800 p-6 flex items-center justify-between ${isSidebarCollapsed ? 'lg:justify-center' : ''}`}>
