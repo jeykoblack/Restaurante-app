@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import Field from '../../components/Field';
 import { API_URL } from '../../lib/api';
-import { useState } from 'react';
+
 
 interface SaasUser {
   id: string;
@@ -53,6 +53,13 @@ interface SaaSPanelProps {
 
 const errorMessage = (err: unknown, fallback: string) =>
   err instanceof Error && err.message ? err.message : fallback;
+
+interface SaaSPanelProps {
+  token: string;
+  onLogout: () => void;
+}
+
+
 
 export default function SaaSPanel({ token, onLogout }: SaaSPanelProps) {
   const [restaurants, setRestaurants] = useState<SaasRestaurant[]>([]);
